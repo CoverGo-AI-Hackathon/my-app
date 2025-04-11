@@ -17,6 +17,7 @@ import {
   TextStyle,
   ImageStyle,
   ScrollView,
+  Linking,
 } from 'react-native';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -100,7 +101,10 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
       Alert.alert('Đăng nhập thành công', 'Xin chào!');
       // Nếu có navigation, bạn sẽ điều hướng người dùng đến màn hình chính
       // navigation.navigate('Home');
-      navigation.navigate('Profile')
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Profile'}]
+      })
     }
   };
 
@@ -114,6 +118,10 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
   
     Alert.alert('Đăng ký', 'Chức năng đang được phát triển');
   };
+
+  const handleLoginGoogle = (): void => {
+    Linking.openURL('https://hcmutssps.id.vn/auth/login');
+  }
 
   // Định nghĩa kiểu dữ liệu cho logo source
   const logoSource: ImageSourcePropType = { uri: 'https://via.placeholder.com/150' };
@@ -201,7 +209,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
           </View>
 
           <View style={styles.socialContainer}>
-            <TouchableOpacity style={styles.socialButton}>
+            <TouchableOpacity style={styles.socialButton} onPress={handleLoginGoogle}>
               <Text style={styles.socialButtonText}>G</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.socialButton}>

@@ -6,26 +6,26 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { RootStackNavigator } from './src/navigations/root.navigate';
 import * as Linking from 'expo-linking';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const prefix = Linking.createURL('/auth/callback');
 
 // Main App với Tab Navigator
 const App: React.FC = () => {
+
   useEffect(() => {
-    const handleDeepLink = (event: { url: string }) => {
+    const handleDeepLink = async (event: { url: string }) => {
       const data = Linking.parse(event.url);
-      const token = data.queryParams?.token;
-      if (token) {
+      const token = data.queryParams?.access_token;
+      if (token && token.length > 0 && token !== undefined) {
+        console.log(token)
         Alert.alert('Đăng nhập thành công!', `Token: ${token}`);
-        // Xử lý lưu token vào AsyncStorage hoặc gọi API login
+        await AsyncStorage.setItem('accessToken', String(token));
       }
+      
     };
 
     const subscription = Linking.addEventListener('url', handleDeepLink);
-
-    Linking.getInitialURL().then((url) => {
-      if (url) handleDeepLink({ url });
-    });
 
     return () => {
       subscription.remove();
@@ -33,8 +33,9 @@ const App: React.FC = () => {
   }, []);
 
 
+
   return (
-    <NavigationContainer linking={{ prefixes: [prefix] }}>
+    <NavigationContainer >
       <RootStackNavigator />
     </NavigationContainer>
   );

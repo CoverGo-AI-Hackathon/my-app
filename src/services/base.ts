@@ -1,7 +1,7 @@
 // services/api.service.ts
 import Constants from 'expo-constants';
 
-const BASE_URL = Constants?.manifest?.extra?.apiBaseUrl || 'https://your-api.com';
+const BASE_URL = Constants?.manifest?.extra?.apiBaseUrl || 'https://hcmutssps.id.vn/';
 
 interface RequestOptions extends RequestInit {
   headers?: Record<string, string>;

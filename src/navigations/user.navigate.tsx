@@ -4,7 +4,7 @@ import { SettingsScreen } from "../screens/auth/setting";
 import { EditProfileScreen } from "../screens/auth/edit";
 import LoginScreen from "../screens/auth/login";
 
-type UserStackParamList = {
+export type UserStackParamList = {
   Profile: undefined;
   Settings: undefined;
   EditProfile: undefined;

@@ -18,20 +18,12 @@ import {
   ImageStyle,
   ScrollView,
 } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
-// Định nghĩa kiểu dữ liệu cho navigation stack
-type RootStackParamList = {
-  Login: undefined;
-  Home: undefined;
-  ForgotPassword: undefined;
-  Register: undefined;
-};
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { UserStackParamList } from '../../navigations/user.navigate';
 
-// Định nghĩa kiểu cho props
-type LoginScreenProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Login'>;
-};
+
+type Props = NativeStackScreenProps<UserStackParamList, 'Login'>;
 
 // Định nghĩa kiểu dữ liệu cho các state
 interface FormState {
@@ -43,8 +35,7 @@ interface FormState {
 }
 
 // Component chính
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
-  // Khởi tạo các state với kiểu dữ liệu
+const LoginScreen: React.FC<Props> = ({ navigation }) => {
   const [formState, setFormState] = useState<FormState>({
     email: '',
     password: '',
@@ -52,15 +43,12 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     emailError: '',
     passwordError: '',
   });
-
-  // Hàm hỗ trợ cập nhật form state
   const updateFormState = (key: keyof FormState, value: string | boolean): void => {
     setFormState(prevState => ({
       ...prevState,
       [key]: value
     }));
   };
-
   const validateEmail = (email: string): boolean => {
     const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email) {
@@ -112,6 +100,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       Alert.alert('Đăng nhập thành công', 'Xin chào!');
       // Nếu có navigation, bạn sẽ điều hướng người dùng đến màn hình chính
       // navigation.navigate('Home');
+      navigation.navigate('Profile')
     }
   };
 
@@ -122,6 +111,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 
   const handleRegister = (): void => {
     // navigation.navigate('Register');
+  
     Alert.alert('Đăng ký', 'Chức năng đang được phát triển');
   };
 
